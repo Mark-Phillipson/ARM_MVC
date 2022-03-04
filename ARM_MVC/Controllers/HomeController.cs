@@ -13,13 +13,11 @@ namespace ARM_MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IClaimsTransformation _claimsTransformation;
+        
 
-        public HomeController(ILogger<HomeController> logger)//,IClaimsTransformation claimsTransformation)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            //_claimsTransformation = claimsTransformation;
-            
         }
         [Authorize(Roles ="BasicUser")]
         public IActionResult Index()
