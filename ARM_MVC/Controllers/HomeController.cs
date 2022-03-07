@@ -22,7 +22,6 @@ namespace ARM_MVC.Controllers
         [Authorize(Roles ="BasicUser")]
         public IActionResult Index()
         {
-
             return View();
         }
         [Authorize(Roles = "Admin")]
@@ -30,16 +29,36 @@ namespace ARM_MVC.Controllers
         {
             return View();
         }
-        [Authorize(Roles ="SuperUser")]
+        //[Authorize(Roles ="SuperUser")]
         public IActionResult Test()
         {
-            return View();
+            try
+            {
+                if (User.IsInRole("SuperUser"))
+                {
+                    return View();
+                }
+                else
+                {
+                    var model=new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,Message="You are not authorised to access Test (Super User) page!" };
+                    return View("Error",model);
+                }
+            }
+            catch (Exception exception)
+            {
+                _logger.Log(LogLevel.Warning, exception.Message);
+                return Content(exception.Message);
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult Blazor()
+        {
+            return View("_Host");
         }
     }
 }

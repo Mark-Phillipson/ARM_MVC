@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Components.Web
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,8 +8,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ARM_MVC.styles.css" asp-append-version="true" />
+    <base href="~/" />
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
-<body>
+<body style="overflow-x:hidden">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -34,6 +37,7 @@
             </div>
         </nav>
     </header>
+    @*https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components?view=aspnetcore-6.0*@
     <div class="row">
         <div class="col-2">
             <nav class="navbar bg-dark">
@@ -44,11 +48,14 @@
                     <li class="nav-item m-2">
                         <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy (Admin)</a>
                     </li>
+                    @if (User.IsInRole("SuperUser"))
+                    {
+                        <li class="nav-item m-2">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Test">Test (SuperUser)</a>
+                        </li>
+                    }
                     <li class="nav-item m-2">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Test">Test (SuperUser)</a>
-                    </li>
-                    <li class="nav-item">
-
+                        <a  class="nav-link text-light" href="/routable-counter">Blazor Counter</a>
                     </li>
                     <li class="dropdown m-2">
                         <button class="btn dropdown-toggle text-light" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
@@ -58,7 +65,8 @@
                         <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenu2">
                             <li class="nav-item m-3">
                                 <a class="btn dropdown-item text-light nav-link" asp-area="" asp-controller="Home" asp-action="Test">
-                                    Test (SuperUser)</a>
+                                    Test (SuperUser)
+                                </a>
                             </li>
                             <li class="nav-item m-3"><button class="dropdown-item text-light nav-link" type="button">Action</button></li>
                             <li class="nav-item m-3"><button class="dropdown-item text-light nav-link" type="button">Another action</button></li>
@@ -72,7 +80,7 @@
                             Split dropend
                         </button>
                         <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                                aria-expanded="false">
                             <span class="visually-hidden">Toggle Dropright</span>
                         </button>
                         <ul class="dropdown-menu bg-dark">
@@ -94,13 +102,14 @@
         </div>
         <footer class="border-top footer text-muted">
             <div class="container">
-                &copy; 2022 - ARM_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                &copy; 2022 - ARM MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="_framework/blazor.server.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

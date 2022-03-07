@@ -1,4 +1,5 @@
 using ARM_BlazorServer.Data;
+using ARM_BlazorServer.Services;
 using ARM_MVC.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Negotiate;
@@ -20,7 +21,7 @@ builder.Services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-
+builder.Services.AddScoped<BuildDynamicMenuService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
