@@ -1,6 +1,9 @@
-using ARM_MVC.Authentication;
+﻿using ARM_MVC.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ARM_MVC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,10 @@ builder.Services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>
 
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<ARM_MVCContext>(options =>
+
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ARM_MVCContext")));
 builder.Services.AddServerSideBlazor();
 var app = builder.Build();
 

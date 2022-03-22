@@ -11,7 +11,7 @@ namespace ARM_MVC.Pages
         private int currentCount = 0;
         private void IncrementCount()
         {
-            Click forcurrentCount++;
+             currentCount++;
         }
     }
 }
